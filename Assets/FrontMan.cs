@@ -6,6 +6,7 @@ public class FrontMan : MonoBehaviour
 {
     public static FrontMan FM;
     public Camera MainCam;
+    public CanvasAI Canvas;
 
     private void Awake()
     {

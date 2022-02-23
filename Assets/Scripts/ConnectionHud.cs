@@ -3,6 +3,7 @@ using Netcode.Transports;
 using Steamworks;
 using Unity.Netcode;
 using UnityEngine;
+using static FrontMan;
 
 [RequireComponent(typeof(NetworkManager))]
 public class ConnectionHud : MonoBehaviour
@@ -66,7 +67,7 @@ public class ConnectionHud : MonoBehaviour
 
         if (GUILayout.Button("Host (Server + Client)"))
         {
-            m_NetworkManager.StartHost();
+            FM.Canvas.StartHost();
         }
 
         GUILayout.BeginHorizontal();

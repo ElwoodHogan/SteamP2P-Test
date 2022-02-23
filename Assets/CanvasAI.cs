@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 using Steamworks;
+using Netcode.Transports;
 
 
 public class CanvasAI : MonoBehaviour
@@ -13,6 +14,10 @@ public class CanvasAI : MonoBehaviour
 
 	List<CSteamID> friendSteamIDList = new List<CSteamID>();
 	List<CSteamID> friendLobbyIDList = new List<CSteamID>();
+
+
+	CSteamID lobbyID;
+	CSteamID hostSteamID;
 
 
 
@@ -58,5 +63,59 @@ public class CanvasAI : MonoBehaviour
 	public void JoinFriendLobby()
 	{
 		SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
+	}
+
+	public void StartHost()
+	{
+		NetworkManager.Singleton.OnClientConnectedCallback += (clientId) => {
+			Debug.Log($"Client connected, clientId={clientId}");
+		};
+
+		NetworkManager.Singleton.OnClientDisconnectCallback += (clientId) => {
+			Debug.Log($"Client disconnected, clientId={clientId}");
+		};
+
+		NetworkManager.Singleton.OnServerStarted += () => {
+			Debug.Log("Server started");
+			//GameObject spawnedObject = Instantiate(spawnedObjectPerfab);
+			//spawnedObject.GetComponent<NetworkObject>().Spawn();
+		};
+
+
+		NetworkManager.Singleton.StartHost();
+
+		SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
+
+		hostSteamID = SteamUser.GetSteamID();
+	}
+
+	public void StartClient()
+	{
+		NetworkManager.Singleton.OnClientConnectedCallback += ClientConnected;
+		NetworkManager.Singleton.OnClientDisconnectCallback += ClientDisconnected;
+
+		NetworkManager.Singleton.StartClient();
+
+		NetworkManager.Singleton.GetComponent<SteamNetworkingTransport>().ConnectToSteamID = hostSteamID.m_SteamID;
+
+		Debug.Log($"Joining room hosted by {NetworkManager.Singleton.GetComponent<SteamNetworkingTransport>().ConnectToSteamID}");
+
+		//SceneManager.LoadScene("MultiplayerDemo");
+		//SceneManager.sceneLoaded += (scene, mode) => {
+		//	NetworkManager.Singleton.StartClient();
+		//	SwitchToGameplay();
+		//};
+
+	}
+	void ClientConnected(ulong clientId)
+	{
+		Debug.Log($"I'm connected, clientId={clientId}");
+	}
+
+	void ClientDisconnected(ulong clientId)
+	{
+		Debug.Log($"I'm disconnected, clientId={clientId}");
+		NetworkManager.Singleton.OnClientDisconnectCallback -= ClientDisconnected;   // remove these else they will get called multiple time if we reconnect this client again
+		NetworkManager.Singleton.OnClientConnectedCallback -= ClientConnected;
 	}
 }
