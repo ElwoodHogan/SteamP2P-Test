@@ -524,7 +524,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Copy ID
 --- !u!222 &369674568
 CanvasRenderer:
   m_ObjectHideFlags: 0

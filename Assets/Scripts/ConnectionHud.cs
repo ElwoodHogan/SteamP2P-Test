@@ -67,7 +67,7 @@ public class ConnectionHud : MonoBehaviour
 
         if (GUILayout.Button("Host (Server + Client)"))
         {
-            FM.Canvas.StartHost();
+            m_NetworkManager.StartHost();
         }
 
         GUILayout.BeginHorizontal();

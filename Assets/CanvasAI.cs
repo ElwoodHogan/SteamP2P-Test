@@ -128,7 +128,10 @@ public class CanvasAI : MonoBehaviour
 
 	public void JoinFriendLobby()
 	{
+		print(friendLobbyIDList[friendLobbyiesDropdown.value]);
 		SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
+		//StartClient();
+		//SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
 	}
 	void OnLobbyCreated(LobbyCreated_t result)
 	{
@@ -143,6 +146,9 @@ public class CanvasAI : MonoBehaviour
 
 	void OnLobbyEntered(LobbyEnter_t result)
 	{
+		print(SteamMatchmaking.GetLobbyOwner(friendLobbyIDList[friendLobbyiesDropdown.value]));
+		FM.Transport.ConnectToSteamID = (ulong)SteamMatchmaking.GetLobbyOwner(friendLobbyIDList[friendLobbyiesDropdown.value]);
+
 		lobbyID = (CSteamID)result.m_ulSteamIDLobby;
 		Debug.Log(result.m_EChatRoomEnterResponse);
 		if (result.m_EChatRoomEnterResponse == 1)
