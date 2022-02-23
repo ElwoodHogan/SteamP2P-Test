@@ -63,6 +63,7 @@ public class CanvasAI : MonoBehaviour
 
 	public void JoinFriendLobby()
 	{
+		print((ulong)friendLobbyIDList[friendLobbyiesDropdown.value]);
 		FM.Transport.ConnectToSteamID = (ulong)friendLobbyIDList[friendLobbyiesDropdown.value];
 		StartClient();
 		//SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
