@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static FrontMan;
 using Unity.Netcode;
-public class MoveSphere : MonoBehaviour
+public class MoveSphere : NetworkBehaviour
 {
     public float AccelForce;
     private void OnMouseDown()
