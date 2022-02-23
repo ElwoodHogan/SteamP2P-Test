@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using Steamworks;
 using Netcode.Transports;
+using static FrontMan;
 
 
 public class CanvasAI : MonoBehaviour
@@ -62,7 +63,9 @@ public class CanvasAI : MonoBehaviour
 
 	public void JoinFriendLobby()
 	{
-		SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
+		FM.Transport.ConnectToSteamID = (ulong)friendLobbyIDList[friendLobbyiesDropdown.value];
+		StartClient();
+		//SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
 	}
 
 	public void StartHost()

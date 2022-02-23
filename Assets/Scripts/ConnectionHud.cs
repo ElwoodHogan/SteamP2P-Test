@@ -79,7 +79,7 @@ public class ConnectionHud : MonoBehaviour
 
         if (GUILayout.Button("Client"))
         {
-            FM.Canvas.StartClient();
+            m_NetworkManager.StartClient();
         }
 
         GUILayout.EndHorizontal();
