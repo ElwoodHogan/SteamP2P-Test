@@ -15,8 +15,8 @@ public class FrontMan : MonoBehaviour
 
     private void Awake()
     {
-        NetworkManager = GetComponent<NetworkManager>();
-        Transport = (SteamNetworkingTransport)NetworkManager.NetworkConfig.NetworkTransport;
+        //NetworkManager = GetComponent<NetworkManager>();
+        //Transport = (SteamNetworkingTransport)NetworkManager.NetworkConfig.NetworkTransport;
         FM = this;
     }
 }

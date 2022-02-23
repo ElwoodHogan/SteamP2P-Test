@@ -8,9 +8,9 @@ using static FrontMan;
 [RequireComponent(typeof(NetworkManager))]
 public class ConnectionHud : MonoBehaviour
 {
-    NetworkManager m_NetworkManager;
+    public NetworkManager m_NetworkManager;
 
-    SteamNetworkingTransport m_Transport;
+    public SteamNetworkingTransport m_Transport;
 
     GUIStyle m_LabelTextStyle;
     

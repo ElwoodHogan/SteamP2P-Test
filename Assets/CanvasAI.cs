@@ -17,11 +17,20 @@ public class CanvasAI : MonoBehaviour
 	List<CSteamID> friendLobbyIDList = new List<CSteamID>();
 
 
+	Callback<LobbyEnter_t> lobbyEnter;
+	Callback<LobbyCreated_t> lobbyCreated;
+
 	CSteamID lobbyID;
 	CSteamID hostSteamID;
 
 
+	private void Start()
+	{
 
+		lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered); // Fires on entering a lobby in both host and client
+		lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated); // Fires on creating a lobby in host
+
+	}
 	public void PrintID()
     {
         print(SteamUser.GetSteamID());
@@ -61,13 +70,7 @@ public class CanvasAI : MonoBehaviour
 		}
 	}
 
-	public void JoinFriendLobby()
-	{
-		print((ulong)friendLobbyIDList[friendLobbyiesDropdown.value]);
-		FM.Transport.ConnectToSteamID = (ulong)friendLobbyIDList[friendLobbyiesDropdown.value];
-		StartClient();
-		//SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
-	}
+	
 
 	public void StartHost()
 	{
@@ -121,5 +124,44 @@ public class CanvasAI : MonoBehaviour
 		Debug.Log($"I'm disconnected, clientId={clientId}");
 		NetworkManager.Singleton.OnClientDisconnectCallback -= ClientDisconnected;   // remove these else they will get called multiple time if we reconnect this client again
 		NetworkManager.Singleton.OnClientConnectedCallback -= ClientConnected;
+	}
+
+	public void JoinFriendLobby()
+	{
+		SteamMatchmaking.JoinLobby(friendLobbyIDList[friendLobbyiesDropdown.value]);
+	}
+	void OnLobbyCreated(LobbyCreated_t result)
+	{
+		if (result.m_eResult == EResult.k_EResultOK)
+			Debug.Log("Lobby created successfully - LobbyID=" + result.m_ulSteamIDLobby);
+		else
+			Debug.Log("Lobby created failed - LobbyID=" + result.m_ulSteamIDLobby);
+		lobbyID = (CSteamID)result.m_ulSteamIDLobby;
+		string personalName = SteamFriends.GetPersonaName();
+		SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", personalName + "'s Room");
+	}
+
+	void OnLobbyEntered(LobbyEnter_t result)
+	{
+		lobbyID = (CSteamID)result.m_ulSteamIDLobby;
+		Debug.Log(result.m_EChatRoomEnterResponse);
+		if (result.m_EChatRoomEnterResponse == 1)
+			Debug.Log($"Successfully joined lobby {SteamMatchmaking.GetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name")}!");
+		else
+			Debug.Log("Failed to join lobby.");
+
+		int playerCount = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
+
+		Debug.Log("PlayerCount: " + playerCount);
+		// Join host's game directly
+		if (playerCount > 1)
+		{
+			var ownerSteamID = SteamMatchmaking.GetLobbyMemberByIndex(lobbyID, 0);
+			hostSteamID = ownerSteamID;
+			StartClient();
+		}
+
+		//GameObject spawnedObject = Instantiate(spawnedObjectPerfab);
+		//spawnedObject.GetComponent<NetworkObject>().Spawn();
 	}
 }

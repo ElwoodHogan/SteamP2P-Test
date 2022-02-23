@@ -941,6 +941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a355eaf3c57dfb498158fff32372866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_NetworkManager: {fileID: 0}
+  m_Transport: {fileID: 0}
   DrawOffset: {x: 58.48, y: 114.72}
   LabelColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &790088729
@@ -2615,8 +2617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCam: {fileID: 963194227}
   Canvas: {fileID: 334168551}
-  Transport: {fileID: 0}
-  NetworkManager: {fileID: 0}
+  Transport: {fileID: 767690906}
+  NetworkManager: {fileID: 767690905}
 --- !u!4 &1728518711
 Transform:
   m_ObjectHideFlags: 0
