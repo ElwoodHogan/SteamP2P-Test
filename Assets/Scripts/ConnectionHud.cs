@@ -29,6 +29,7 @@ public class ConnectionHud : MonoBehaviour
 
     void OnGUI()
     {
+        return;
         m_LabelTextStyle.normal.textColor = LabelColor;
 
         m_Transport = (SteamNetworkingTransport)m_NetworkManager.NetworkConfig.NetworkTransport;
