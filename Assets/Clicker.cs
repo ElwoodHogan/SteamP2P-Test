@@ -13,13 +13,19 @@ public class Clicker : NetworkBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += (x)=> counter.text = count.Value + "";
+        count.OnValueChanged += (x,y) => counter.text = y + "";
     }
 
     private void OnMouseDown()
     {
+        count.Value++;
+        /*
+        print(count.Value);
         CountUpServerRPC();
+        print(count.Value);
         counter.text = count.Value + "";
-        ChangeCounterClientRPC();
+        print(counter.text);
+        ChangeCounterClientRPC();*/
     }
 
     private void Update()
@@ -30,7 +36,7 @@ public class Clicker : NetworkBehaviour
             printVal = false;
         }
     }
-
+    /*
     [ServerRpc(RequireOwnership = false)]
     public void CountUpServerRPC()
     {
@@ -42,5 +48,5 @@ public class Clicker : NetworkBehaviour
     public void ChangeCounterClientRPC()
     {
         counter.text = count.Value + "";
-    }
+    }*/
 }
