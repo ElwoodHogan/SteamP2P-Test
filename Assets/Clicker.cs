@@ -18,7 +18,7 @@ public class Clicker : NetworkBehaviour
     private void OnMouseDown()
     {
         CountUpServerRPC();
-        counter.text = count.Value + "";
+        
     }
 
     private void Update()
@@ -34,6 +34,7 @@ public class Clicker : NetworkBehaviour
     public void CountUpServerRPC()
     {
         count.Value++;
+        counter.text = count.Value + "";
         //ChangeCounterClientRPC();
     }
 
