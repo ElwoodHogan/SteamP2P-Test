@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.Netcode;
+using Sirenix.OdinInspector;
 public class Clicker : NetworkBehaviour
 {
     public TextMeshPro counter;
-    NetworkVariable<int> count;
+    public NetworkVariable<int> count = new NetworkVariable<int>(0);
+    public bool printVal = false;
 
-    private void Awake()
-    {
-        count.Value = 0;
-    }
     private void OnMouseDown()
     {
         CountUpServerRPC();
@@ -19,7 +17,11 @@ public class Clicker : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) print(count.Value);
+        if (printVal)
+        {
+            print(count.Value);
+            printVal = false;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]

@@ -288,6 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counter: {fileID: 51581905}
+  count:
+    m_InternalValue: 0
+  printVal: 0
 --- !u!114 &51581905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,7 +604,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &334168553
 MonoBehaviour:
   m_ObjectHideFlags: 0
