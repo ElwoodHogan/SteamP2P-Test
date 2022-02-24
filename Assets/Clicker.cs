@@ -10,9 +10,15 @@ public class Clicker : NetworkBehaviour
     public NetworkVariable<int> count = new NetworkVariable<int>(0);
     public bool printVal = false;
 
+    private void Start()
+    {
+        NetworkManager.Singleton.OnClientConnectedCallback += (x)=> counter.text = count.Value + "";
+    }
+
     private void OnMouseDown()
     {
         CountUpServerRPC();
+        counter.text = count.Value + "";
     }
 
     private void Update()
@@ -28,12 +34,12 @@ public class Clicker : NetworkBehaviour
     public void CountUpServerRPC()
     {
         count.Value++;
-        ChangeCounterClientRPC();
+        //ChangeCounterClientRPC();
     }
 
     [ClientRpc]
     public void ChangeCounterClientRPC()
     {
-        counter.text = count.Value + "";
+        
     }
 }
