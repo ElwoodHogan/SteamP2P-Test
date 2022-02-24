@@ -22,6 +22,12 @@ public class Clicker : NetworkBehaviour
     public void CountUpServerRPC()
     {
         count.Value++;
+        ChangeCounterClientRPC();
+    }
+
+    [ClientRpc]
+    public void ChangeCounterClientRPC()
+    {
         counter.text = count.Value + "";
     }
 }
