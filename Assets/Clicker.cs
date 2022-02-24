@@ -15,7 +15,11 @@ public class Clicker : NetworkBehaviour
     private void OnMouseDown()
     {
         CountUpServerRPC();
-        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q)) print(count.Value);
     }
 
     [ServerRpc(RequireOwnership = false)]
