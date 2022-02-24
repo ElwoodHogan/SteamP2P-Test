@@ -6,11 +6,11 @@ using Unity.Netcode;
 public class Clicker : NetworkBehaviour
 {
     public TextMeshPro counter;
-    int count = 0;
+    NetworkVariable<int> count;
 
     private void Awake()
     {
-        //count.Value = 0;
+        count.Value = 0;
     }
     private void OnMouseDown()
     {
@@ -21,7 +21,7 @@ public class Clicker : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void CountUpServerRPC()
     {
-        count++;
-        counter.text = count + "";
+        count.Value++;
+        counter.text = count.Value + "";
     }
 }
